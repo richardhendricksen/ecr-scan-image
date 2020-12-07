@@ -1,7 +1,7 @@
 # Bitbucket Pipelines Pipe: ECR Scan Image
 
-Inspired by the [ecr-scan-image](https://github.com/alexjurkiewicz/ecr-scan-image) Github Action repository by Alex Jurkiewicz.  
-I modified the code so it would work as a pipe for Bitbucket pipelines.
+Inspired by the [ecr-scan-image](https://github.com/alexjurkiewicz/ecr-scan-image) Github Action by Alex Jurkiewicz.  
+I modified the source so it would work as a Bitbucket Pipelines Pipe.
 
 ## YAML Definition
 

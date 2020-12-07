@@ -53,7 +53,6 @@ script:
         CVE-2014-456132
       AWS_ACCESS_KEY_ID: 'xxx'
       AWS_SECRET_ACCESS_KEY: 'xxx'
-
 ```
 
 ## Development

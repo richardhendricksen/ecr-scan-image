@@ -1,4 +1,3 @@
-const core = require('@actions/core')
 const AWS = require('aws-sdk')
 
 /**
@@ -127,12 +126,28 @@ const parseIgnoreList = (list) => {
   return ignoreList
 }
 
+/**
+ * Gets the value of an input.  The value is also trimmed.
+ *
+ * @param     name     name of the input to get
+ * @param     options  optional. See InputOptions.
+ * @returns   string
+ */
+const getInput = (name, options) => {
+  const val =
+    process.env[`${name.replace(/ /g, '_').toUpperCase()}`] || ''
+  if (options && options.required && !val) {
+    throw new Error(`Input required and not supplied: ${name}`)
+  }
+
+  return val.trim()
+}
+
 const main = async () => {
-  core.debug('Entering main')
-  const repository = core.getInput('repository', { required: true })
-  const tag = core.getInput('tag', { required: true })
-  const failThreshold = core.getInput('fail_threshold') || 'high'
-  const ignoreList = parseIgnoreList(core.getInput('ignore_list'))
+  const repository = getInput('repository', { required: true })
+  const tag = getInput('tag', { required: true })
+  const failThreshold = getInput('fail_threshold') || 'high'
+  const ignoreList = parseIgnoreList(getInput('ignore_list'))
 
   if (
     failThreshold !== 'critical' &&
@@ -143,10 +158,10 @@ const main = async () => {
   ) {
     throw new Error('fail_threshold input value is invalid')
   }
-  core.debug(`Repository:${repository}, Tag:${tag}, Ignore list:${ignoreList}`)
+  console.debug(`Repository:${repository}, Tag:${tag}, Ignore list:${ignoreList}`)
   const ECR = new AWS.ECR()
 
-  core.debug('Checking for existing findings')
+  console.debug('Checking for existing findings')
   let status = null
   let findings = await getFindings(ECR, repository, tag, !!ignoreList.length)
   if (findings) {
@@ -176,7 +191,7 @@ const main = async () => {
     console.log('Polling ECR for image scan findings...')
     findings = await getFindings(ECR, repository, tag)
     status = findings.imageScanStatus.status
-    core.debug(`Scan status: ${status}`)
+    console.debug(`Scan status: ${status}`)
     firstPoll = false
   }
 
@@ -205,14 +220,6 @@ const main = async () => {
   const indeterminate = counts.UNDEFINED || 0
   const ignored = ignoredFindings.length
   const total = critical + high + medium + low + informational + indeterminate
-  core.setOutput('critical', critical.toString())
-  core.setOutput('high', high.toString())
-  core.setOutput('medium', medium.toString())
-  core.setOutput('low', low.toString())
-  core.setOutput('informational', informational.toString())
-  core.setOutput('undefined', indeterminate.toString())
-  core.setOutput('ignored', ignored.toString())
-  core.setOutput('total', total.toString())
   console.log('Vulnerabilities found:')
   console.log(`${critical.toString().padStart(3, ' ')} Critical ${getCount('critical', ignoredCounts)}`)
   console.log(`${high.toString().padStart(3, ' ')} High ${getCount('high', ignoredCounts)}`)
@@ -239,6 +246,7 @@ const main = async () => {
   try {
     await main()
   } catch (error) {
-    core.setFailed(error.message)
+    console.error(error.message);
+    process.exitCode = 1;
   }
 })()

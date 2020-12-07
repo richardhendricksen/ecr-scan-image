@@ -5,7 +5,7 @@
 Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
 
 ```yaml
-- pipe: richardhendricksen/ecr-scan-image:1.0.0
+- pipe: rhendricksen/ecr-scan-image:1.0.0
   variables:
     REPOSITORY: '<string>'
     TAG: '<string>'
@@ -28,7 +28,7 @@ Basic example:
 
 ```yaml
 script:
-  - pipe: richardhendricksen/ecr-scan-image:1.0.0
+  - pipe: rhendricksen/ecr-scan-image:1.0.0
     variables:
       REPOSITORY: 'MyRepository'
       TAG: 'latest'

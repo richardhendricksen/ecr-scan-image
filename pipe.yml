@@ -1,5 +1,5 @@
 name: ECR Scan Image
-image: richardhendricksen/ecr-scan-image:1.0.0
+image: rhendricksen/ecr-scan-image:1.0.0
 description: Run AWS ECR vulnerability scan on Docker image
 variables:
   - name: INPUT_REPOSITORY

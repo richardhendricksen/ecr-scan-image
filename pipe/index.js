@@ -144,10 +144,10 @@ const getInput = (name, options) => {
 }
 
 const main = async () => {
-  const repository = getInput('repository', { required: true })
-  const tag = getInput('tag', { required: true })
-  const failThreshold = getInput('fail_threshold') || 'high'
-  const ignoreList = parseIgnoreList(getInput('ignore_list'))
+  const repository = getInput('REPOSITORY', { required: true })
+  const tag = getInput('TAG', { required: true })
+  const failThreshold = getInput('FAIL_TRESHOLD') || 'high'
+  const ignoreList = parseIgnoreList(getInput('IGNORE_LIST'))
 
   if (
     failThreshold !== 'critical' &&

@@ -8,7 +8,7 @@ I modified the code so it would work as a pipe for Bitbucket pipelines.
 Add the following snippet to the script section of your `bitbucket-pipelines.yml` file:
 
 ```yaml
-- pipe: rhendricksen/ecr-scan-image:1.0.0
+- pipe: docker://rhendricksen/ecr-scan-image:1.0.0
   variables:
     REPOSITORY: '<string>'
     TAG: '<string>'
@@ -43,7 +43,7 @@ Basic example:
 
 ```yaml
 script:
-  - pipe: rhendricksen/ecr-scan-image:1.0.0
+  - pipe: docker://rhendricksen/ecr-scan-image:1.0.0
     variables:
       REPOSITORY: 'myorg/myapp'
       TAG: 'latest'
@@ -53,6 +53,7 @@ script:
         CVE-2014-456132
       AWS_ACCESS_KEY_ID: 'xxx'
       AWS_SECRET_ACCESS_KEY: 'xxx'
+      AWS_REGION: 'eu-west-1'
 ```
 
 ## Development

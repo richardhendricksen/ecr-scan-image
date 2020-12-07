@@ -1,6 +1,16 @@
 name: ECR Scan Image
 image: richardhendricksen/ecr-scan-image:1.0.0
 description: Run AWS ECR vulnerability scan on Docker image
+variables:
+  - name: INPUT_REPOSITORY
+  - name: INPUT_TAG
+  - name: INPUT_FAIL_THRESHOLD
+  - name: INPUT_IGNORE_LIST
+  - name: AWS_PROFILE
+  - name: AWS_REGION
+  - name: AWS_SDK_LOAD_CONFIG
+  - name: AWS_ACCESS_KEY_ID
+  - name: AWS_SECRET_ACCESS_KEY
 category: Security
 repository: https://github.com/richardhendricksen/ecr-scan-image
 maintainer:

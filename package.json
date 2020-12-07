@@ -1,0 +1,19 @@
+{
+  "name": "ecr-scan-image",
+  "version": "1.0.0",
+  "description": "Bitbucket Pipelines Pipe to scan an image in ECR and fail if vulnerabilities are found.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "repository": {
+    "url": "https://github.com/richardhendricksen/ecr-scan-image/"
+  },
+  "author": "Richard Hendricksen <richard.hendricksen@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "aws-sdk": "^2.620.0"
+  }
+}

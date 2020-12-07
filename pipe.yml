@@ -1,0 +1,12 @@
+name: ECR Scan Image
+image: richardhendricksen/ecr-scan-image:1.0.0
+description: Run AWS ECR vulnerability scan on Docker image
+category: Security
+repository: https://github.com/richardhendricksen/ecr-scan-image
+maintainer:
+  name: Richard Hendricksen
+  website: https://github.com/richardhendricksen/ecr-scan-image
+tags:
+  - aws
+  - ecr
+  - scan-image

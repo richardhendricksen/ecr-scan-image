@@ -23,11 +23,9 @@ Add the following snippet to the script section of your `bitbucket-pipelines.yml
 | TAG (*)               | Image tag to scan. |
 | FAIL_THRESHOLD        | Set fail treshold. Fail if any vulnerabilities equal to or over this severity level are detected. Valid values: critical, high, medium, low, informational. Default value is high. | 
 | IGNORE_LIST           | List of CVE IDs to ignore.  ⚠️ Note: The ignore_list can either be a multi-line string (like the example below) or a list (separated using commas or spaces) containing CVE IDs to be ignored. | 
-| AWS_ACCESS_KEY_ID     | Required in combination with AWS_SECRET_ACCESS_KEY for access to the ECR Repository. | 
-| AWS_SECRET_ACCESS_KEY | Required in combination with AWS_ACCESS_KEY_ID for access to the ECR Repository. | 
-| AWS_REGION            | Set AWS Region, e.g. 'eu-west-1'. | 
-| AWS_SDK_LOAD_CONFIG   | Set to '1' when using local AWS config. | 
-| AWS_PROFILE           | Local AWS profile name. | 
+| AWS_ACCESS_KEY_ID     | Required in combination with AWS_SECRET_ACCESS_KEY for access to the ECR Repository. Default value is $AWS_ACCESS_KEY_ID. | 
+| AWS_SECRET_ACCESS_KEY | Required in combination with AWS_ACCESS_KEY_ID for access to the ECR Repository. Default value is $AWS_SECRET_ACCESS_KEY. | 
+| AWS_REGION            | Set AWS Region, e.g. 'eu-west-1'. Default value is $AWS_DEFAULT_REGION.| 
 
 _(*) = required variable._
 

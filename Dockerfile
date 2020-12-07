@@ -5,7 +5,7 @@ WORKDIR /
 RUN yarn install && yarn cache clean --all
 
 # copy source code
-COPY LICENSE.txt README.md pipe.yml /
+COPY README.md pipe.yml /
 COPY pipe /
 
 ENTRYPOINT ["node", "/index.js"]

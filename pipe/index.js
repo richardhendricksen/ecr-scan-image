@@ -143,6 +143,44 @@ const getInput = (name, options) => {
   return val.trim()
 }
 
+/**
+ * Logs findings to console that are equal or above threshold
+ *
+ * @param     findings   list of findings
+ * @param     threshold  threshold
+ * @returns   void
+ */
+const logFindingsToConsole = (findings, threshold) => {
+  console.log(`Vulnerabilities with severity >= ${threshold}:`)
+  switch (threshold) {
+    case "critical":
+      findings.filter(({ severity }) => severity === "CRITICAL").forEach((finding) => console.log(finding));
+      break;
+    case "high":
+      findings.filter(({ severity }) => severity === "CRITICAL").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "HIGH").forEach((finding) => console.log(finding));
+      break;
+    case "medium":
+      findings.filter(({ severity }) => severity === "CRITICAL").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "HIGH").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "MEDIUM").forEach((finding) => console.log(finding));
+      break;
+    case "low":
+      findings.filter(({ severity }) => severity === "CRITICAL").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "HIGH").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "MEDIUM").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "LOW").forEach((finding) => console.log(finding));
+      break;
+    case "informational":
+      findings.filter(({ severity }) => severity === "CRITICAL").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "HIGH").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "MEDIUM").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "LOW").forEach((finding) => console.log(finding));
+      findings.filter(({ severity }) => severity === "INFORMATIONAL").forEach((finding) => console.log(finding));
+      break;
+  }
+}
+
 const main = async () => {
   const repository = getInput('REPOSITORY', { required: true })
   const tag = getInput('TAG', { required: true })
@@ -200,8 +238,9 @@ const main = async () => {
     throw new Error(`Unhandled scan status "${status}". API response: ${JSON.stringify(findings)}`)
   }
 
-  const findingsList = !!ignoreList.length ? await getAllFindings(ECR, repository, tag) : [] // only fetch all findings if we have an ignore list
+  const findingsList = await getAllFindings(ECR, repository, tag);
   const ignoredFindings = findingsList.filter(({ name }) => ignoreList.includes(name))
+  const unignoredFindings = findingsList.filter(({ name }) => !ignoreList.includes(name))
 
   if (ignoreList.length !== ignoredFindings.length) {
     const missedIgnores = ignoreList.filter(name => !ignoredFindings.map(({ name }) => name).includes(name))
@@ -238,6 +277,8 @@ const main = async () => {
             : /* failThreshold === 'critical' ? */ critical - ignoredCounts.critical
 
   if (numFailingVulns > 0) {
+    // Log vulnerabilities above threshold to console
+    logFindingsToConsole(unignoredFindings, failThreshold);
     throw new Error(`Detected ${numFailingVulns} vulnerabilities with severity >= ${failThreshold} (the currently configured fail_threshold).`)
   }
 }
